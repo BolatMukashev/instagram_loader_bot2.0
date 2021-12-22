@@ -1,0 +1,5 @@
+photos/**
+videos/**
+.env
+venv
+.idea
