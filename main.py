@@ -59,19 +59,23 @@ class User(object):
                 self._download_file(post.video_url, video_name)
 
     def _scatter_files(self):
-        os.mkdir(self.photo_path)
-        os.mkdir(self.video_path)
+        """Раскидать файлы: фото отдельно, видео отдельно"""
         all_files_names = os.listdir(self.target_name)
+
+        os.mkdir(self.photo_path)
         photos_names = [file for file in all_files_names if fnmatch.fnmatch(file, "*.jpg")]
-        videos_names = [file for file in all_files_names if fnmatch.fnmatch(file, "*.mp4")]
         for file_name in photos_names:
             dir1 = os.path.join(self.target_name, file_name)
             dir2 = os.path.join(self.photo_path, file_name)
             shutil.move(dir1, dir2)
+
+        os.mkdir(self.video_path)
+        videos_names = [file for file in all_files_names if fnmatch.fnmatch(file, "*.mp4")]
         for file_name in videos_names:
             dir1 = os.path.join(self.target_name, file_name)
             dir2 = os.path.join(self.video_path, file_name)
             shutil.move(dir1, dir2)
+
         shutil.rmtree(self.target_name, ignore_errors=True)
 
     @staticmethod
@@ -113,5 +117,5 @@ class User(object):
 
 if __name__ == '__main__':
     connect(config.INST_USERNAME, config.INST_PASSWORD)
-    user = User('aru_symbat')
+    user = User('qleon_qeroe')
     user.download_photos()
